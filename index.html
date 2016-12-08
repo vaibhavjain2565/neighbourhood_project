@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="utf-8">
+    <title>Map Project</title>
+    <style>
+      *{
+        box-sizing: border-box;
+      }
+      #map {
+      height: 800px;
+      width: 76%;
+      right: 0px;
+      }
+      .navigation{
+        width: 24%;
+      }
+      .wrapper{
+        display: flex;
+      }
+      .navigation{
+        background-color: #000;
+        color: white;
+      }
+      .nav{
+        list-style: none;
+        padding: 0;
+      }
+      .item{
+        padding: 1em  2em;
+        border-bottom: 1px solid #fff;
+        margin: 0.3em;
+      }
+      .search_map{
+        font-size: 1em;
+        width: 100%;
+        padding: 0.3em;
+        margin-top: 0.3em;
+      }
+      .header_menu{
+       display: none;
+      }
+      @media screen and (max-width: 700px){
+         .header_menu{
+         left: 0;
+         position: absolute;
+         padding: 0.5em;
+         display: inline-block;
+         text-align: center;
+         z-index: 10;
+        }
+        svg{
+          width: 32px;
+          fill: black;
+        }
+        #map{
+          width: 100%;
+        }
+        .navigation {
+        z-index: 10;
+        width: 200px;
+        position: absolute;
+       -webkit-transform: translate(-300px, 0);
+        transform: translate(-300px, 0);
+        transition: transform 0.3s ease;
+        }
+
+       .navigation.open {
+       -webkit-transform: translate(0, 0);
+       transform: translate(0, 0);
+       }
+     }
+
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+   <!--   hamburger icon-->
+      <a id="menu" class="header_menu">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M2 6h20v3H2zm0 5h20v3H2zm0 5h20v3H2z"></path>
+        </svg>
+      </a>
+      <div class="navigation">
+    <!--    textInput binding checks for any change in the value-->
+        <input type="text" value="" id="search_map" class="search_map" data-bind="textInput: search">
+        <ul class="nav" id="nav" data-bind="foreach:places">
+<!--       text will be title, when item will be clicked openInfo will be called and if visibility is true it will be visible-->
+          <li class="item" id="items" data-bind="text:title,click:$parent.openInfo,visible:visibility"></li>
+        </ul>
+      </div>
+      <div id="map"></div>  <!-- this div wiil hold the map -->
+    </div>
+    <script src="lib/knockout-3.2.0.js"></script>
+    <script src="lib/jquery.min.js"></script>
+       <!-- adding the maps api -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqD8UvkLat1PdEag_OGngA9kYjW_bTfL4"></script>
+    <script src="main.js"></script>
+    <script>
+       // on click functionality of  hamburger icon
+      var menu = document.querySelector('#menu');
+      var main = document.querySelector('#map');
+      var drawer = document.querySelector('.navigation');
+
+      menu.addEventListener('click', function(e) {
+        drawer.classList.toggle('open');
+        e.stopPropagation();
+      });
+      main.addEventListener('click', function() {
+        drawer.classList.remove('open');
+      });
+    </script>
+  </body>
+<html>
